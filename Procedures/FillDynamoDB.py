@@ -22,9 +22,13 @@ def Launch():
             'updatedAt' : "{}T{}Z".format(TIME.date(), TIME.time()),
             'id' : str(manga['_id']),
 
-            'Mal_id' : int(manga['Mal_id']),
-            'Url' : manga['Url'],
-            'from' : manga['from']
+            'mal_id' : int(manga['mal_id']),
+            'url' : manga['url'],
+            'from' : manga['from'],
+            'title' : manga['title'],
+            'title_japanese': manga['title_japanese'],
+            'synopsys': manga['synopsys'],
+            'image_url': manga['image_url'],
         }
 
         # Creating a new item in DynamoDB
@@ -51,7 +55,7 @@ def Launch():
             'updatedAt' : "{}T{}Z".format(TIME.date(), TIME.time()),
             'id' : str(chapitre['_id']),
 
-            'Mal_id' : int(chapitre['Mal_id']),
+            'mal_id' : int(chapitre['mal_id']),
             'title' : chapitre['title'],
             'num_chapitre': int(chapitre['num_chapitre']),
             'url' : chapitre['url'],

@@ -10,7 +10,7 @@ def extract_chapters(dic):
 
         # dictionnaire à insérer dans la liste finale
         res_data = {
-            'Mal_id': int(dic['Mal_id']),
+            'mal_id': int(dic['mal_id']),
             'title': "",
             'num_chapitre': -1,
             'url': "",
@@ -40,7 +40,7 @@ def extract_chapters(dic):
 
 
         # verifier que les valeurs de res_data sont complétées
-        if res_data['Mal_id'] != int(dic['Mal_id']) :
+        if res_data['mal_id'] != int(dic['mal_id']) :
             return -1
         if res_data['title'] == "" :
             return -1
@@ -58,7 +58,7 @@ def extract_chapters(dic):
 
 # recup lien des chapitres + nom des chapitres
 def getChaptersLink(dic):
-    req = requests.get(dic["Url"])
+    req = requests.get(dic["url"])
     soup = BeautifulSoup(req.text, "html.parser")
 
     liens = []

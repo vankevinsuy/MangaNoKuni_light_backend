@@ -6,7 +6,7 @@ from Tests.Manganelo import testExpectedResult
 class MyTestCase(unittest.TestCase):
     def test_getChaptersLink(self):
         #### DATA
-        input_dic = {'Mal_id': '116778', 'Url': 'https://manganelo.com/manga/ix917953', 'from': 'manganelo'}
+        input_dic = {'mal_id': '116778', 'url': 'https://manganelo.com/manga/ix917953', 'from': 'manganelo'}
 
         #### LAUNCH
         result = mangaNelo.getChaptersLink(input_dic)
@@ -26,7 +26,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_extract_chapters(self):
         #### DATA
-        input = {'Mal_id': '116778', 'Url': 'https://manganelo.com/manga/ix917953', 'from': 'manganelo'}
+        input = {'mal_id': '116778', 'url': 'https://manganelo.com/manga/ix917953', 'from': 'manganelo'}
 
         #### LAUNCH
         result = mangaNelo.extract_chapters(input)
