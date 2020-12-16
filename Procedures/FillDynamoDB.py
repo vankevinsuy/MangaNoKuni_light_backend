@@ -16,29 +16,20 @@ def Launch():
     # envoyer les mangas dans DynamoDB
     for manga in mycol_manga.find():
 
-        data = {
-            '_typename' : "Manga",
-            'createdAt' : "{}T{}Z".format(TIME.date(), TIME.time()),
-            'updatedAt' : "{}T{}Z".format(TIME.date(), TIME.time()),
-            'id' : str(manga['_id']),
-
-            'mal_id' : int(manga['mal_id']),
-            'url' : manga['url'],
-            'from' : manga['from'],
-            'title' : manga['title'],
-            'title_japanese': manga['title_japanese'],
-            'synopsys': manga['synopsys'],
-            'image_url': manga['image_url'],
-        }
+        manga['id'] = str(manga['_id'])
+        manga.pop('_id')
+        manga['_typename'] = "Manga"
+        manga['createdAt'] = "{}T{}Z".format(TIME.date(), TIME.time())
+        manga['updatedAt'] = "{}T{}Z".format(TIME.date(), TIME.time())
 
         # Creating a new item in DynamoDB
-        try :
+        try:
             tableManga.put_item(
-                Item=data
+                Item=manga
             )
-            print("{}  inserted".format(data))
+            print("{}  inserted".format(manga))
         except Exception as e:
-            print("data not inserted {}".format(data))
+            print("manga not inserted in Dynamo{}".format(manga))
             print(e)
 
 
@@ -49,25 +40,18 @@ def Launch():
 
     for chapitre in mycol_chapitre.find():
 
-        data = {
-            '_typename' : "Manga",
-            'createdAt' : "{}T{}Z".format(TIME.date(), TIME.time()),
-            'updatedAt' : "{}T{}Z".format(TIME.date(), TIME.time()),
-            'id' : str(chapitre['_id']),
-
-            'mal_id' : int(chapitre['mal_id']),
-            'title' : chapitre['title'],
-            'num_chapitre': int(chapitre['num_chapitre']),
-            'url' : chapitre['url'],
-            'images_html' : chapitre['images_html']
-        }
+        chapitre['_typename']= "Chapitre"
+        chapitre['createdAt']= "{}T{}Z".format(TIME.date(), TIME.time())
+        chapitre['updatedAt']= "{}T{}Z".format(TIME.date(), TIME.time())
+        chapitre['id']= str(chapitre['_id'])
+        chapitre.pop('_id')
 
         # Creating a new item in DynamoDB
         try :
             tableChapitre.put_item(
-                Item=data
+                Item=chapitre
             )
-            print("{}  inserted".format(data))
+            print("{}  inserted".format(chapitre))
         except Exception as e:
-            print("data not inserted {}".format(data))
+            print("chapitre not inserted in dynamo {}".format(chapitre))
             print(e)

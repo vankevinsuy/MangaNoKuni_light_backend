@@ -28,7 +28,7 @@ def Launch():
             print("insertion mal_id : {}".format(manga['mal_id']))
             mycol_chapitre.insert_many(data_to_insert)
         except Exception as e:
-            print("insertion failed mal_id : {}".format(manga['mal_id']))
+            print("insertion failed in mongo mal_id : {}".format(manga['mal_id']))
             print(e)
 
     # ajouter les champs supplémentaires
@@ -36,7 +36,10 @@ def Launch():
         "title": "",
         "title_japanese" : "",
         "synopsys" : "",
-        "image_url" : ""
+        "image_url" : "",
+        "score" : "",
+         "genre" : [],
+        "authors" : []
     } })
 
     # ajouter les données de Jikan
@@ -44,15 +47,18 @@ def Launch():
 
         data = jikan.manga(int(manga["mal_id"]))
 
-        mycol_manga.update_one({"_id" : manga["_id"]},
-           {
-            "$set" : {
-                "title": data["title"],
-                "title_japanese" : data["title_japanese"],
-                "synopsys" : data["synopsis"],
-                "image_url" : data["image_url"]
-            }})
-
-
-
-Launch()
+        try :
+            mycol_manga.update_one({"_id" : manga["_id"]},
+               {
+                "$set" : {
+                    "title": data["title"],
+                    "title_japanese" : data["title_japanese"],
+                    "synopsys" : data["synopsis"],
+                    "image_url" : data["image_url"],
+                    "score" : str(data['score']),
+                    "genre" : [x['name'] for x in data['genres']],
+                    "authors": [x['name'] for x in data['authors']]
+                }})
+        except Exception as e:
+            print(manga)
+            print(e)
