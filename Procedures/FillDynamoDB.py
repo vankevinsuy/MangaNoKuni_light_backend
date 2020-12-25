@@ -1,6 +1,8 @@
 import pymongo
 import boto3
 import datetime
+from decimal import Decimal
+import json
 
 def Launch():
     myclient = pymongo.MongoClient("mongodb://snoozy:deadoralive@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
@@ -12,6 +14,7 @@ def Launch():
     dynamodb = boto3.resource('dynamodb')
     tableManga = dynamodb.Table('Manga-hdsfapoi3rdyfeji6ir65yknoq-dev')
     TIME = datetime.datetime.now()
+
 
     # envoyer les mangas dans DynamoDB
     for manga in mycol_manga.find():
@@ -38,6 +41,30 @@ def Launch():
     # envoyer les chapitres dans DynamoDB
     tableChapitre = dynamodb.Table('Chapitre-hdsfapoi3rdyfeji6ir65yknoq-dev')
 
+    #supprimer la table chapitre pour la remplir ensuite
+    tableChapitre.delete()
+
+    # recréer la table chapitre
+    dynamodb.create_table(
+        TableName='Chapitre-hdsfapoi3rdyfeji6ir65yknoq-dev',
+        KeySchema=[
+            {
+                'AttributeName': 'id',
+                'KeyType': 'HASH'  # Partition key
+            }
+        ],
+        AttributeDefinitions=[
+            {
+                'AttributeName': 'id',
+                'AttributeType': 'S'
+            }
+        ],
+        ProvisionedThroughput={
+            'ReadCapacityUnits': 10,
+            'WriteCapacityUnits': 10
+        }
+    )
+
     for chapitre in mycol_chapitre.find():
 
         chapitre['_typename']= "Chapitre"
@@ -45,6 +72,9 @@ def Launch():
         chapitre['updatedAt']= "{}T{}Z".format(TIME.date(), TIME.time())
         chapitre['id']= str(chapitre['_id'])
         chapitre.pop('_id')
+
+        if(type(chapitre['num_chapitre']) == 'float'):
+            chapitre = json.loads(json.dumps(chapitre), parse_float=Decimal)
 
         # Creating a new item in DynamoDB
         try :

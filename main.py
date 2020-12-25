@@ -1,4 +1,6 @@
 from Procedures import FillDynamoDB, FillMongoDB
 
-FillMongoDB.Launch()
-FillDynamoDB.Launch()
+FillMongoDB.UpdateManga()
+FillMongoDB.UpdateChapters()
+
+# FillDynamoDB.Launch()

@@ -19,9 +19,11 @@ def extract_chapters(dic):
 
         # mettre les liens images sous formes de balises
         images = getImgages(chapitre_url)
-        images_to_html = ""
+        images_to_html = "<div style= margin:0;padding:0;display:flex;flex-direction:column;>"
         for img_link in images:
-            images_to_html  = images_to_html + "<img src=  {}  />".format(img_link)
+            images_to_html  = images_to_html + "<img src=  {}  style=width:100%;height:100%; />".format(img_link)
+
+        images_to_html = images_to_html + "</div>"
         res_data['images_html'] = images_to_html
 
         # récupérer le titre du chapitre
