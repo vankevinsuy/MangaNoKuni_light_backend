@@ -23,5 +23,5 @@ manga_scraper_result = {
     "title_japanese": "ONE PIECE",
     "score": "9.1",
     "authors": "Oda  Eiichiro (Story & Art)",
-    "genre": ["Action", "Adventure", "Comedy", "Fantasy", "Shounen", "Super Power"]
+    "genres": ["Action", "Adventure", "Comedy", "Fantasy", "Shounen", "Super Power"]
 }
