@@ -48,7 +48,7 @@ def insertChapitre():
 
 
     # envoyer les chapitres dans DynamoDB
-    tableChapitre = dynamodb.Table('Chapitre-hdsfapoi3rdyfeji6ir65yknoq-dev')
+    tableChapitre = dynamodb.Table('Chapitre-nvyqnuhtenbrfmeatpaukmpv24-myenv')
 
     for chapitre in mycol_chapitre.find():
 
