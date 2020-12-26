@@ -5,16 +5,18 @@ from decimal import Decimal
 import json
 import time
 
+# insérer les données dans Dynamodb depuis MongoDB
+dynamodb = boto3.resource('dynamodb')
+TIME = datetime.datetime.now()
+tableManga = dynamodb.Table('Manga-7zccm6vrw5dhhpi5o5zg6qpzya-dev')
+tableChapitre = dynamodb.Table('Chapitre-7zccm6vrw5dhhpi5o5zg6qpzya-dev')
+
+
 def insertManga():
     print("INERTION MANGAS IN DYNAMODB")
     myclient = pymongo.MongoClient("mongodb://snoozy:deadoralive@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
     mydb = myclient["MangaNoKuni"]
     mycol_manga = mydb["Manga"]
-
-    # insérer les données dans Dynamodb depuis MongoDB
-    dynamodb = boto3.resource('dynamodb')
-    tableManga = dynamodb.Table('Manga-nvyqnuhtenbrfmeatpaukmpv24-myenv')
-    TIME = datetime.datetime.now()
 
 
     # envoyer les mangas dans DynamoDB
@@ -48,7 +50,6 @@ def insertChapitre():
 
 
     # envoyer les chapitres dans DynamoDB
-    tableChapitre = dynamodb.Table('Chapitre-nvyqnuhtenbrfmeatpaukmpv24-myenv')
 
     for chapitre in mycol_chapitre.find():
 
