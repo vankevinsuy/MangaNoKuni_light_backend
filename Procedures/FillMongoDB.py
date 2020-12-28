@@ -2,13 +2,14 @@ import pymongo
 import Scrapers.mangaNelo as mangaNelo
 from Scrapers.MALscraper.malScraper import malScraper
 
+myclient = pymongo.MongoClient("mongodb://snoozy:deadoralive@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
+mydb = myclient["MangaNoKuni"]
+mycol_manga = mydb["Manga"]
+mycol_chapitre = mydb["Chapitre"]
 
 
 def UpdateManga() :
     print("UPDATE MANGA TABLE")
-    myclient = pymongo.MongoClient("mongodb://snoozy:deadoralive@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
-    mydb = myclient["MangaNoKuni"]
-    mycol_manga = mydb["Manga"]
 
     # ajouter les champs supplémentaires
     mycol_manga.update_many({}, {"$set": {
@@ -49,11 +50,6 @@ def UpdateManga() :
 
 def UpdateChapters():
     print("UPDATE CHAPTER TABLE")
-
-    myclient = pymongo.MongoClient("mongodb://snoozy:deadoralive@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
-    mydb = myclient["MangaNoKuni"]
-    mycol_manga = mydb["Manga"]
-    mycol_chapitre = mydb["Chapitre"]
 
     # récupérer les données et les stocker dans mongodb
     for manga in mycol_manga.find():
