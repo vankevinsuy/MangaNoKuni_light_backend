@@ -1,7 +1,7 @@
 from Procedures import FillDynamoDB, FillMongoDB
 
 FillMongoDB.UpdateManga()
-FillMongoDB.UpdateChapters()
+# FillMongoDB.UpdateChapters()
 
-FillDynamoDB.insertManga()
-FillDynamoDB.insertChapitre()
+# FillDynamoDB.insertManga()
+# FillDynamoDB.insertChapitre()

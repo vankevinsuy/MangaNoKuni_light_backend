@@ -18,12 +18,16 @@ def UpdateManga() :
         "image_url": "",
         "score": "",
         "genre": [],
-        "authors": ""
+        "authors": "",
+        "title_search": ""
     }})
 
     # ajouter les données de Jikan
     for manga in mycol_manga.find():
         data = malScraper().manga(int(manga["mal_id"]))
+
+        title_search = str(data["title"]).upper().replace(" ", "")
+        title_search =  ''.join(x for x in title_search if x.isalpha())
 
         try:
             mycol_manga.update_one({"_id": manga["_id"]},
@@ -35,7 +39,8 @@ def UpdateManga() :
                                            "image_url": data["image_url"],
                                            "score": data['score'],
                                            "genre": data['genres'],
-                                           "authors": data['authors']
+                                           "authors": data['authors'],
+                                           "title_search": title_search
                                        }})
             print(data)
         except Exception as e:
@@ -78,7 +83,7 @@ def UpdateChapters():
                 if mycol_chapitre.count_documents({'mal_id': data['mal_id'], 'num_chapitre': data['num_chapitre']}) == 1:
                     mycol_chapitre.update_one({'mal_id': data['mal_id'], 'num_chapitre': data['num_chapitre']},
                                                { "$set":
-                                                     { "url": data['mal_id'],
+                                                     { "url": data['url'],
                                                        'images_html' : data['images_html']
                                                        }
                                                  })
