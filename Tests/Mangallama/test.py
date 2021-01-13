@@ -29,7 +29,7 @@ class MyTestCase(unittest.TestCase):
         result = mangallama.extract_chapters(self.input_dic, self.input_dic['url'][1]['url'])
 
         #### VERIFY
-        self.assertTrue(len(result) > 0)
+        self.assertTrue(result != None)
 
 
 if __name__ == '__main__':
