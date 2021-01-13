@@ -1,39 +1,26 @@
 import unittest
 from Scrapers import mangaNelo
-from Tests.Manganelo import testExpectedResult
 
 
 class MyTestCase(unittest.TestCase):
+    #### DATA
+    input_dic = {'mal_id': '116778', 'url': 'https://manganelo.com/manga/ix917953', 'from': 'manganelo'}
+
     def test_getChaptersLink(self):
-        #### DATA
-        input_dic = {'mal_id': '116778', 'url': 'https://manganelo.com/manga/ix917953', 'from': 'manganelo'}
 
         #### LAUNCH
-        result = mangaNelo.getChaptersLink(input_dic)
+        result = mangaNelo.getChaptersLink(self.input_dic['url'])
 
         #### VERIFY
-        self.assertEqual(result, testExpectedResult.test_getChaptersLink)
-
-    def test_getImages(self):
-        #### DATA
-        input = "https://manganelo.com/chapter/ix917953/chapter_46"
-
-        #### LAUNCH
-        result = mangaNelo.getImgages(input)
-
-        #### VERIFY
-        self.assertEqual(result, testExpectedResult.test_getImages)
+        self.assertTrue(len(result) > 0)
 
     def test_extract_chapters(self):
-        #### DATA
-        input = {'mal_id': '116778', 'url': 'https://manganelo.com/manga/ix917953', 'from': 'manganelo'}
 
         #### LAUNCH
-        result = mangaNelo.extract_chapters(input)
-        expected = testExpectedResult.test_extract_chapters
+        result = mangaNelo.extract_chapters(self.input_dic)
 
         #### VERIFY
-        self.assertEqual(result, expected)
+        self.assertTrue(len(result) > 0)
 
 if __name__ == '__main__':
     unittest.main()

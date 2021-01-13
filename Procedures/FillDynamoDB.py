@@ -11,13 +11,13 @@ TIME = datetime.datetime.now()
 tableManga = dynamodb.Table('Manga-7zccm6vrw5dhhpi5o5zg6qpzya-dev')
 tableChapitre = dynamodb.Table('Chapitre-7zccm6vrw5dhhpi5o5zg6qpzya-dev')
 
+myclient = pymongo.MongoClient("mongodb://snoozy:deadoralive@192.168.1.22:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
+mydb = myclient["MangaNoKuni_dev"]
+mycol_manga = mydb["Manga"]
+mycol_chapitre = mydb["Chapitre"]
 
 def insertManga():
     print("INERTION MANGAS IN DYNAMODB")
-    myclient = pymongo.MongoClient("mongodb://snoozy:deadoralive@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
-    mydb = myclient["MangaNoKuni"]
-    mycol_manga = mydb["Manga"]
-
 
     # envoyer les mangas dans DynamoDB
     for manga in mycol_manga.find():
@@ -40,12 +40,8 @@ def insertManga():
 
 def insertChapitre():
     print("INERTION CHAPTERS IN DYNAMODB")
-    myclient = pymongo.MongoClient("mongodb://snoozy:deadoralive@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
-    mydb = myclient["MangaNoKuni"]
-    mycol_chapitre = mydb["Chapitre"]
 
     # insérer les données dans Dynamodb depuis MongoDB
-    dynamodb = boto3.resource('dynamodb')
     TIME = datetime.datetime.now()
 
 

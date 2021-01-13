@@ -15,17 +15,18 @@ def extract_chapters(dic, url):
         # récupérer le titre du chapitre
         req = requests.get(chapitre_url)
         soup = BeautifulSoup(req.text, "html.parser")
-        res_data['title'] = soup.title.string
+        res_data['title'] = soup.find('div', {'id':"titlecontainer"}).text
 
         # récupérer l'url du chapitre
         res_data['url'] = chapitre_url
 
         # récupérer le numéro du chapitre
-        try :
-            res_data['num_chapitre'] = int(chapitre_url.split('/')[-1].split('_')[-1])
-        except :
-            res_data['num_chapitre'] = float(chapitre_url.split('/')[-1].split('_')[-1])
+        try:
+            res_data['num_chapitre'] = int(res_data['title'].split(':')[1])
+        except:
+            res_data['num_chapitre'] = float(res_data['title'].split(':')[1])
 
+        print(res_data['num_chapitre'] )
 
         # verifier que les valeurs de res_data sont complétées
         if res_data['mal_id'] != int(dic['mal_id']) :
@@ -50,8 +51,10 @@ def getChaptersLink(url):
     req = requests.get(url)
     soup = BeautifulSoup(req.text, "html.parser")
 
+    tbody_content = soup.find('tbody')
+
     liens = []
-    for link in soup.findAll('a', attrs={'class': "chapter-name text-nowrap"}):
-        liens.append(link.get('href'))
+    for link in tbody_content.findAll('a'):
+        liens.append("https://mangallama.com/" + link.get('href'))
 
     return liens
