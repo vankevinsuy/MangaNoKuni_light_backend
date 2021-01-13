@@ -17,14 +17,15 @@ def extract_chapters(dic):
             "images_html": ""
         }
 
-        # mettre les liens images sous formes de balises
-        images = getImgages(chapitre_url)
-        images_to_html = "<div style= margin:0;padding:0;display:flex;flex-direction:column;>"
-        for img_link in images:
-            images_to_html  = images_to_html + "<img src=  {}  style=width:100%;height:100%; />".format(img_link)
-
-        images_to_html = images_to_html + "</div>"
-        res_data['images_html'] = images_to_html
+        # # mettre les liens images sous formes de balises
+        # images = getImgages(chapitre_url)
+        # images_to_html = "<div style= margin:0;padding:0;display:flex;flex-direction:column;>"
+        # for img_link in images:
+        #     images_to_html  = images_to_html + "<img src=  {}  style=max-width:100%;height:auto; />".format(img_link)
+        #
+        # images_to_html = images_to_html + "</div>"
+        # res_data['images_html'] = images_to_html
+        res_data['images_html'] = "future update"
 
         # récupérer le titre du chapitre
         req = requests.get(chapitre_url)
