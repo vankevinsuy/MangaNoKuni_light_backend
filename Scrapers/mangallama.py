@@ -26,7 +26,6 @@ def extract_chapters(dic, url):
         except:
             res_data['num_chapitre'] = float(res_data['title'].split(':')[1])
 
-        print(res_data['num_chapitre'] )
 
         # verifier que les valeurs de res_data sont complétées
         if res_data['mal_id'] != int(dic['mal_id']) :

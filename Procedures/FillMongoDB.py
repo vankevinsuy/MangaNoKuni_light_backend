@@ -53,7 +53,7 @@ def UpdateChapters():
     print("UPDATE CHAPTER TABLE")
 
     # récupérer les données et les stocker dans mongodb
-    for manga in mycol_manga.find({'mal_id': 86337}):
+    for manga in mycol_manga.find():
         # scrap de manga.Url pour récupérer les objets Chapitres
         print(manga)
         chapters_data = []
