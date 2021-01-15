@@ -1,5 +1,6 @@
 import unittest
-from Scrapers import mangallama
+from Scrapers.Manga import mangallama
+
 
 class MyTestCase(unittest.TestCase):
     #### DATA

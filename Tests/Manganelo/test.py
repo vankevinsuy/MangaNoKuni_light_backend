@@ -1,5 +1,5 @@
 import unittest
-from Scrapers import mangaNelo
+from Scrapers.Manga import mangaNelo
 
 
 class MyTestCase(unittest.TestCase):

@@ -22,9 +22,9 @@ def extract_chapters(dic, url):
 
         # récupérer le numéro du chapitre
         try:
-            res_data['num_chapitre'] = int(res_data['title'].split(':')[1])
+            res_data['num_chapitre'] = int(res_data['title'].split(':')[-1])
         except:
-            res_data['num_chapitre'] = float(res_data['title'].split(':')[1])
+            res_data['num_chapitre'] = float(res_data['title'].split(':')[-1])
 
 
         # verifier que les valeurs de res_data sont complétées
