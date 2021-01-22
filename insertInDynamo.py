@@ -1,4 +1,4 @@
-from Procedures import FillDynamoDB
+from Fillers import FillDynamoDB
 
 FillDynamoDB.insertManga()
 

@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def extract_chapters(dic, url):
+def extract_chapters(dic, url, failedFile):
     res = []
     chapitres = getChaptersLink(url)
 
@@ -13,38 +13,37 @@ def extract_chapters(dic, url):
                     'images_html': "future update"}
 
         # récupérer le titre du chapitre
-        try :
-            req = requests.get(chapitre_url)
-            if req.status_code == 200:
-                soup = BeautifulSoup(req.text, "html.parser")
-                res_data['title'] = soup.find('div', {'id':"titlecontainer"}).text
+        req = requests.get(chapitre_url)
+        if req.status_code == 200:
+            soup = BeautifulSoup(req.text, "html.parser")
+            res_data['title'] = soup.find('div', {'id':"titlecontainer"}).text
 
-                # récupérer l'url du chapitre
-                res_data['url'] = chapitre_url
+            # récupérer l'url du chapitre
+            res_data['url'] = chapitre_url
 
-                # récupérer le numéro du chapitre
-                try:
-                    res_data['num_chapitre'] = int(res_data['title'].split(':')[-1])
-                except:
-                    res_data['num_chapitre'] = float(res_data['title'].split(':')[-1])
+            # récupérer le numéro du chapitre
+            try:
+                res_data['num_chapitre'] = int(res_data['title'].split(':')[-1])
+            except:
+                res_data['num_chapitre'] = float(res_data['title'].split(':')[-1])
 
 
-                # verifier que les valeurs de res_data sont complétées
-                if res_data['mal_id'] != int(dic['mal_id']) :
-                    return -1
-                if res_data['title'] == "" :
-                    return -1
-                if res_data['num_chapitre'] == -1 :
-                    return -1
-                if res_data['url'] == "" :
-                    return -1
-                if res_data['images_html'] == "" :
-                    return -1
+            # verifier que les valeurs de res_data sont complétées
+            if res_data['mal_id'] != int(dic['mal_id']) :
+                return -1
+            if res_data['title'] == "" :
+                return -1
+            if res_data['num_chapitre'] == -1 :
+                return -1
+            if res_data['url'] == "" :
+                return -1
+            if res_data['images_html'] == "" :
+                return -1
 
-                yield res_data
-        except:
-            pass
-
+            yield res_data
+        else:
+            print(chapitre_url)
+            failedFile.add_link(chapitre_url)
 
 
 # recup lien des chapitres + nom des chapitres

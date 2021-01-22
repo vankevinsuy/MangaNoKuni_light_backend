@@ -3,6 +3,9 @@ import Scrapers.Manga.mangaNelo as mangaNelo
 import Scrapers.Manga.mangallama as mangallama
 from Scrapers.MALscraper.malScraper import malScraper
 import Scrapers.Anime.four_anime as four_anime
+from Failed_data.failedEpisodeWriter import faildEpisodeWriter
+from Failed_data.failedChapterWriter import faildChapterWriter
+
 
 myclient = pymongo.MongoClient("mongodb://snoozy:deadoralive@192.168.1.22:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
 mydb = myclient["MangaNoKuni_dev"]
@@ -10,6 +13,9 @@ mycol_manga = mydb["Manga"]
 mycol_chapitre = mydb["Chapitre"]
 mycol_anime = mydb["Anime"]
 mycol_episode = mydb["Episode"]
+
+failedEpisode = faildEpisodeWriter()
+failedChapter = faildChapterWriter()
 
 
 def UpdateManga() :
@@ -63,12 +69,12 @@ def UpdateChapters():
 
         for source in manga['url']:
             if source['from'] == "manganelo" :
-                for data in mangaNelo.extract_chapters(manga, source['url']):
+                for data in mangaNelo.extract_chapters(manga, source['url'], failedChapter):
                     if data['num_chapitre'] not in [x["num_chapitre"] for x in chapters_data]:
                         chapters_data.append(data)
 
             if source['from'] == "mangallama" :
-                for data in mangallama.extract_chapters(manga, source['url']):
+                for data in mangallama.extract_chapters(manga, source['url'], failedChapter):
                     if data['num_chapitre'] not in [x["num_chapitre"] for x in chapters_data]:
                         chapters_data.append(data)
 
@@ -147,7 +153,7 @@ def UpdateEpisodes():
 
         for source in episode['url']:
             if source['from'] == "4anime" :
-                for data in four_anime.extract_episodes(episode, source['url']):
+                for data in four_anime.extract_episodes(episode, source['url'], failedEpisode):
                     if data['num_episode'] not in [x["num_episode"] for x in episodes_data]:
                         episodes_data.append(data)
 

@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def extract_chapters(dic, url):
+def extract_chapters(dic, url, failedFile):
     res = []
     chapitres = getChaptersLink(url)
 
@@ -41,7 +41,9 @@ def extract_chapters(dic, url):
                 return -1
 
             yield res_data
-
+        else:
+            print(chapitre_url)
+            failedFile.add_link(chapitre_url)
 
 # recup lien des chapitres + nom des chapitres
 def getChaptersLink(url):

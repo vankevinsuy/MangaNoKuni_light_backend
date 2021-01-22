@@ -1,4 +1,4 @@
-from Procedures import FillMongoDB
+from Fillers import FillMongoDB
 
 FillMongoDB.UpdateAnime()
 

@@ -1,9 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
-import time
 
+def extract_episodes(dic, url, failedFile):
 
-def extract_episodes(dic, url):
     episodes = getEpisodeLink(url)
 
     for episode_url in episodes :
@@ -13,15 +12,20 @@ def extract_episodes(dic, url):
 
         # récupérer le titre de l'episode
         req = requests.get(episode_url)
+
         if req.status_code == 200:
             soup = BeautifulSoup(req.text, "html.parser")
             res_data['title'] = soup.title.string
 
             print(res_data['title'])
 
-            # récupérer l'url du chapitre
-            res_data['url'] = soup.find("source")['src']
-
+            # récupérer l'url de l'épisode
+            for script in soup.findAll('script',{'type':'text/javascript'}):
+                str_script = str(script)
+                if "mirror_dl" in str_script:
+                    for element in str_script.split():
+                        if "href" in element :
+                            res_data['url'] = element.replace('href=\\"', '').replace('\\"><i', '')
 
             # récupérer le numéro du chapitre
             try:
@@ -41,7 +45,9 @@ def extract_episodes(dic, url):
                 return -1
 
             yield res_data
-
+        else:
+            print("fail : " + episode_url)
+            failedFile.add_link(episode_url)
 
 # recup lien des chapitres + nom des chapitres
 def getEpisodeLink(url):
