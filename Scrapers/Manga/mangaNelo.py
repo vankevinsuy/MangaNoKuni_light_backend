@@ -14,35 +14,33 @@ def extract_chapters(dic, url):
 
         # récupérer le titre du chapitre
         req = requests.get(chapitre_url)
-        soup = BeautifulSoup(req.text, "html.parser")
-        res_data['title'] = soup.title.string
+        if req.status_code == 200:
+            soup = BeautifulSoup(req.text, "html.parser")
+            res_data['title'] = soup.title.string
 
-        # récupérer l'url du chapitre
-        res_data['url'] = chapitre_url
+            # récupérer l'url du chapitre
+            res_data['url'] = chapitre_url
 
-        # récupérer le numéro du chapitre
-        try :
-            res_data['num_chapitre'] = int(chapitre_url.split('/')[-1].split('_')[-1])
-        except :
-            res_data['num_chapitre'] = float(chapitre_url.split('/')[-1].split('_')[-1])
+            # récupérer le numéro du chapitre
+            try :
+                res_data['num_chapitre'] = int(chapitre_url.split('/')[-1].split('_')[-1])
+            except :
+                res_data['num_chapitre'] = float(chapitre_url.split('/')[-1].split('_')[-1])
 
 
-        # verifier que les valeurs de res_data sont complétées
-        if res_data['mal_id'] != int(dic['mal_id']) :
-            return -1
-        if res_data['title'] == "" :
-            return -1
-        if res_data['num_chapitre'] == -1 :
-            return -1
-        if res_data['url'] == "" :
-            return -1
-        if res_data['images_html'] == "" :
-            return -1
+            # verifier que les valeurs de res_data sont complétées
+            if res_data['mal_id'] != int(dic['mal_id']) :
+                return -1
+            if res_data['title'] == "" :
+                return -1
+            if res_data['num_chapitre'] == -1 :
+                return -1
+            if res_data['url'] == "" :
+                return -1
+            if res_data['images_html'] == "" :
+                return -1
 
-        yield res_data
-    #     res.append(res_data)
-    #
-    # return res
+            yield res_data
 
 
 # recup lien des chapitres + nom des chapitres
