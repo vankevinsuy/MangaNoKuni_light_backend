@@ -2,3 +2,5 @@
 venv
 *.pyc
 .DS_Store
+failed_chapter.txt
+failed_episode.txt

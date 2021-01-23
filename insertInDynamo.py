@@ -1,5 +1,9 @@
 from Fillers import FillDynamoDB
 
-FillDynamoDB.insertManga()
+# FillDynamoDB.insertManga()
+#
+# FillDynamoDB.insertChapitre()
 
-FillDynamoDB.insertChapitre()
+FillDynamoDB.insertAnime()
+
+FillDynamoDB.insertEpisode()
