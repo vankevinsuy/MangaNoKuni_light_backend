@@ -1,9 +1,17 @@
 from Fillers import FillMongoDB
+import schedule
 
-FillMongoDB.UpdateAnime()
+def job(m):
+    FillMongoDB.UpdateAnime()
 
-FillMongoDB.UpdateManga()
+    FillMongoDB.UpdateManga()
 
-FillMongoDB.UpdateEpisodes()
+    FillMongoDB.UpdateEpisodes()
 
-FillMongoDB.UpdateChapters()
+    FillMongoDB.UpdateChapters()
+
+
+schedule.every().days.at("14:00").do(job,'Time to update data')
+
+while True:
+    schedule.run_pending()
