@@ -29,16 +29,10 @@ class malScraper :
 
         title = soup.findAll("div", class_="spaceit_pad")
         for t in title:
-            if("English" in t.text):
-                res["title"] = t.text.split(':')[1].lstrip().rstrip()
-
             if ("Japanese" in t.text):
                 res["title_japanese"] = t.text.split(':')[1].lstrip().rstrip()
 
-        # dans le cas où aucun titre anglais trouvé on prend le titre h1
-        if res["title"] == "":
-            title = soup.find("span", class_="h1-title")
-            res["title"] = title.text.rstrip()
+        res["title"] = soup.title.string.split("- MyAnimeList.net")[0].strip()
 
         score = soup.find("div", attrs={"data-title":"score"})
         res['score'] = str(float(score.text))
@@ -80,16 +74,11 @@ class malScraper :
 
         title = soup.findAll("div", class_="spaceit_pad")
         for t in title:
-            if("English" in t.text):
-                res["title"] = t.text.split(':')[1].lstrip().rstrip()
-
             if ("Japanese" in t.text):
                 res["title_japanese"] = t.text.split(':')[1].lstrip().rstrip()
 
-        # dans le cas où aucun titre anglais trouvé on prend le titre h1
-        if res["title"] == "":
-            title = soup.find("span", class_="h1-title")
-            res["title"] = title.text.rstrip()
+        res["title"] = soup.title.string.split("- MyAnimeList.net")[0].strip()
+
 
         score = soup.find("div", attrs={"data-title":"score"})
         res['score'] = str(float(score.text))
