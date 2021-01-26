@@ -18,6 +18,8 @@ def extract_chapters(dic, url, failedFile):
             soup = BeautifulSoup(req.text, "html.parser")
             res_data['title'] = soup.find('div', {'id':"titlecontainer"}).text
 
+            print(res_data['title'])
+
             # récupérer l'url du chapitre
             res_data['url'] = chapitre_url
 
@@ -42,7 +44,7 @@ def extract_chapters(dic, url, failedFile):
 
             yield res_data
         else:
-            print(chapitre_url)
+            print("fail : " + chapitre_url)
             failedFile.add_link(chapitre_url)
 
 

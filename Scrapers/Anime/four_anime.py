@@ -27,11 +27,16 @@ def extract_episodes(dic, url, failedFile):
                         if "href" in element :
                             res_data['url'] = element.replace('href=\\"', '').replace('\\"><i', '')
 
-            # récupérer le numéro du chapitre
-            try:
-                res_data['num_episode'] = int(res_data['title'].split()[-1])
-            except:
-                res_data['num_episode'] = float(res_data['title'].split()[-1])
+            # récupérer le numéro de l'épisode
+            if "Episode" in res_data['title'] : 
+                try:
+                    res_data['num_episode'] = int(res_data['title'].split()[-1])
+                except:
+                    res_data['num_episode'] = float(res_data['title'].split()[-1])
+
+            else : 
+                res_data['num_episode'] = str(res_data['title'].split()[-1])
+
 
 
             # verifier que les valeurs de res_data sont complétées
