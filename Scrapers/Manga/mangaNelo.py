@@ -1,12 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
+from Failed_data.failedData import add_failed_manga_in_base
 
 
-def extract_chapters(dic, url, failedFile):
+def extract_chapters(dic, url):
     res = []
     chapitres = getChaptersLink(url)
 
-    for chapitre_url in chapitres :
+    for chapitre_url in chapitres:
 
         # dictionnaire à insérer dans la liste finale
         res_data = {'mal_id': int(dic['mal_id']), 'title': "", 'num_chapitre': -1, 'url': "", "images_html": "",
@@ -42,10 +43,12 @@ def extract_chapters(dic, url, failedFile):
             if res_data['images_html'] == "" :
                 return -1
 
+
             yield res_data
         else:
             print("fail : " + chapitre_url)
-            failedFile.add_link(chapitre_url)
+            res_data["type"] = "chapitre"
+            add_failed_manga_in_base(res_data)
 
 # recup lien des chapitres + nom des chapitres
 def getChaptersLink(url):

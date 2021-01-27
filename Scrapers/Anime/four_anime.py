@@ -1,7 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
+from Failed_data.failedData import add_failed_anime_in_base
 
-def extract_episodes(dic, url, failedFile):
+
+def extract_episodes(dic, url):
 
     episodes = getEpisodeLink(url)
 
@@ -52,7 +54,7 @@ def extract_episodes(dic, url, failedFile):
             yield res_data
         else:
             print("fail : " + episode_url)
-            failedFile.add_link(episode_url)
+            add_failed_anime_in_base(res_data)
 
 # recup lien des chapitres + nom des chapitres
 def getEpisodeLink(url):

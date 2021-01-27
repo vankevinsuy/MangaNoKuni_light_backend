@@ -4,7 +4,7 @@ import pymongo
 from bs4 import BeautifulSoup
 
 myclient = pymongo.MongoClient("mongodb://snoozy:deadoralive@192.168.1.22:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false")
-mydb = myclient["MangaNoKuni"]
+mydb = myclient["MangaNoKuni_dev"]
 mycol_manga = mydb["Manga"]
 
 class TestMalUrl(unittest.TestCase):
