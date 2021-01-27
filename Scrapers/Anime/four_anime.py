@@ -54,7 +54,11 @@ def extract_episodes(dic, url):
             yield res_data
         else:
             print("fail : " + episode_url)
-            add_failed_anime_in_base(res_data)
+            add_failed_anime_in_base(
+                {'mal_id': int(dic['mal_id']),
+                 'url': episode_url
+                 }
+            )
 
 # recup lien des chapitres + nom des chapitres
 def getEpisodeLink(url):

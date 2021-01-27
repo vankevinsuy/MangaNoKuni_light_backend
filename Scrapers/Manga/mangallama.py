@@ -47,7 +47,11 @@ def extract_chapters(dic, url):
         else:
             print("fail : " + chapitre_url)
             res_data["type"] = "chapitre"
-            add_failed_manga_in_base(res_data)
+            add_failed_manga_in_base(
+                {'mal_id': int(dic['mal_id']),
+                 'url': chapitre_url
+                 }
+            )
 
 
 # recup lien des chapitres + nom des chapitres
